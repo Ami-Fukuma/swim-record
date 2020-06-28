@@ -1,0 +1,81 @@
+<div class = "main">
+    <div class = "index">
+        <div class="tabs">
+            <input id="game" type="radio" name="tab_item" checked>
+            <label class="tab_item" for="game">大会一覧</label>
+            <input id="player" type="radio" name="tab_item">
+            <label class="tab_item" for="player">選手一覧</label>
+            <input id="style" type="radio" name="tab_item">
+            <label class="tab_item" for="style">種目一覧</label>
+
+            <div class="tab_content" id="game_content">
+                <div class="tab_content_description">
+                    <ul>
+                        <% @games.each do |t| %>                            
+                            <li class="info">
+                                <i class="fas fa-chevron-circle-right list"></i>
+                                <span class = "day"><%= t.day.year %></span>
+                                <% if t.course != "長" %>
+                                    <span class = "course1"><%= t.course %></span>
+                                <% else %>
+                                    <span class = "course2"><%= t.course %></span>
+                                <% end %>                               
+                                <a href="/games/<%= t.id %>"><%= t.name %></a>
+                                <span class = "edit"><%= link_to "EDIT", edit_game_path(t) %> </span>                             
+                                <br>
+                            </li>
+                        <% end %>
+                    </ul>
+                </div>
+            </div>
+            <div class="tab_content" id="player_content">
+                <div class="tab_content_description">
+                    <ul>
+                        <% @players.each do |t| %>
+                            <li class="info">
+                                <i class="fas fa-chevron-circle-right list"></i>
+                                
+                                <span class = "s1"><%= t.s1%></span>
+                                <a href="/players/<%= t.id %>"><%= t.name %></a> 
+                                                               
+                                <span class = "edit"><%= link_to "EDIT", edit_player_path(t.id) %> </span>                             
+                                <br>
+                            </li>
+                        <% end %>
+                    </ul>
+                </div>
+            </div> 
+            <div class="tab_content" id="style_content">
+                <div class="tab_content_description">
+                    <ul>
+                        <% @styles.each do |t| %>
+                            <li class="info">
+                                <i class="fas fa-chevron-circle-right list"></i>
+                                <a href="/styles/<%= t.id %>"><%= t.type %></a>                          
+                                <br>
+                            </li>
+                        <% end %>
+                    </ul>
+                </div>
+            </div>              
+        </div>
+        
+    </div>
+
+    <div class ="buttons">   
+        <div class = "new_edit">
+            <%= link_to "大会登録", new_game_path %>
+        </div>
+        <div class = "new_edit">
+            
+            <%= link_to "選手登録", new_player_path %>
+        </div> 
+    </div>
+    
+</div>
+
+
+
+
+
+

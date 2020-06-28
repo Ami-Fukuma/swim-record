@@ -1,0 +1,25 @@
+
+<div class="text-input">
+   <div class = "new_box">
+      <%= form_for(@game, :url => { controller:'games', action:'create'})do |f| %>
+         <%= f.label :日付 %>
+         <br>
+         <%= f.date_field :day,size: 140 %>
+         <br>
+         <%= f.label :大会名%>
+         <br>
+         <%= f.text_field :name,size: 140 %>
+         <br>
+         <%= f.label :場所%>
+         <br>
+         <%= f.text_field :place,size: 140 %>
+         <br>
+         <%= f.label :水路 %>
+         <br>
+         <%= f.select :course, [["短水路", "短"], ["長水路", "長"]], include_blank: "選択して下さい" %>
+         <br>
+         <%= f.submit %>
+         <br>
+      <% end %>
+   </div>
+</div>

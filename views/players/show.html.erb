@@ -1,0 +1,123 @@
+
+<div class="players_show">
+  <div class="player">
+    <div>
+      <% if @player.sex != '男'%>
+        <i class="fas fa-female sexw"></i></span>
+      <% else %>
+        <i class="fas fa-male sexm"></i>
+      <% end %>
+  
+    </div>
+    <div>
+      <span class = "s1"><%= @player.s1%></span>
+      <span class = "day"><%= @player.birthday.strftime('%Y/%m/%d') %></span>
+      <br>   
+      <span class = "player_name"><%= @player.name %></span>
+      <br>
+    </div>
+  </div>
+
+
+  <div class = "graph-box">
+    <% @keys.each do |t| %>
+      <div class = "graph">      
+        <canvas id='myChart<%= t %>' style="position: relative; height:300; width:400"></canvas>
+    
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
+        <script> 
+          function TimeConvert(value) {
+            var h = value*(-1) / 3600 | 0;
+            var m = value*(-1) % 3600 / 60 | 0;
+            var s = value*(-1) % 60;
+            value = String(h)+":"+String(PadZero(m))+":"+String(PadZero(s));
+            return value;
+
+            function PadZero(v) {
+              if (v < 10) {
+                return "0" + v;
+              } else {
+                return v;
+              }
+            }        
+          };
+
+          var x = <%== @x[t] %>, y = <%= @y[t] %>
+          var ctx = document.getElementById('myChart<%= t %>').getContext('2d');
+          var chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: x,
+                datasets: [{                
+                    label: '<%= t %>',
+                    borderColor: 'rgb(75, 192, 192)',
+                    fill: true,
+                    data: y
+                }]
+            },
+            options: {
+              title: {
+                display: true,
+                text: '<%= t %>',
+                fontSize: 30
+              },
+              scales: {
+                yAxes: [{
+                  ticks: {
+                    maxTicksLimit:5,                  
+                    userCallback: TimeConvert
+                  }
+                }]
+              },
+              tooltips: {
+                callbacks: {
+                  label: function(tooltipItem, data) {
+                    return TimeConvert(tooltipItem.yLabel);
+                  }
+                }
+              }
+              
+            }
+          });
+        </script> 
+      </div>
+    <% end %>
+  </div>
+
+
+  <div class="scores">
+    <% @keys.each do |t| %>       
+      <div class="score">
+        <span class = "game_name"><%= t %></span>
+        <br>
+        <% @hashy[t].each do |s| %>
+          <span class = "day"><%= s.game.day.year %></span>
+          <br>
+          <span class = "time">
+            <% if s.game.course != "長" %>
+              <span class = "course1"><%= s.game.course %></span>
+            <% else %>
+              <span class = "course2"><%= s.game.course %></span>
+            <% end %>
+            <span class = "game_name"><%= s.game.name %></span>
+            <br>
+            <%= s.style.type %>          
+            <%= s.phase %>
+            <br>
+            <a><span class = "reac_time">REAC</span>
+            <%= s.reac_time %></a>
+            <br>             
+            <%= s.time1 %>
+            <br>
+            <%= s.time2 %>
+            <br>
+            <%= s.time3 %>
+            <br>
+            <%= s.time4 %>
+            <br>
+          </span>
+        <% end %>
+      </div>
+    <% end %>
+  </div>

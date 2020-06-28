@@ -1,0 +1,20 @@
+
+<div class="text-input">
+  <%= form_for @game do |f| %>
+    <%= f.label :name %>
+    <br>
+    <%= f.text_field :name, :size => 140 %> 
+    <br>
+    <%= f.label :place %>
+    <br>
+    <%= f.text_field :place, :size => 140 %> 
+    <br>
+    <%= f.label :day %>
+    <br>
+    <%= f.text_field :day, :size => 140 %> 
+    <br>
+    <%= f.submit "EDIT" %>
+    <%= button_to "DELETE", game_path(@game.id), method: :delete %>
+  <% end %>
+
+</div>

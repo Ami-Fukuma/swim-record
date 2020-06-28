@@ -1,0 +1,80 @@
+ 
+
+
+<div class="games_show">
+  <div class="game">
+    <i class="fas fa-map-marker-alt position"></i>
+    <span class = "place"><%= @game.place %></span>
+    <% if @game.course != "長" %>
+      <span class = "course1"><%= @game.course %></span>
+    <% else %>
+      <span class = "course2"><%= @game.course %></span>
+    <% end %>
+    <span class = "day"><%= @game.day.strftime('%Y/%m/%d') %></span>
+    <br>
+    <span class = "game_name"><%= @game.name %></span>
+    
+    
+ 
+  </div>
+
+  <div class="scores">
+    <% @keys.each do |k| %>
+      <div class="score">
+        <%= k.type %>
+        <% @hash[k.type].each do |s| %>
+          <label for="trigger<%= s.id %>" class="open_button">        
+            <%= s.player.name %>
+            <br>
+            <% if s.time4 != '' %>
+              <%= s.time4 %>
+            <% elsif s.time3 != '' %>
+              <%= s.time3 %>
+            <% elsif s.time2 != '' %>
+              <%= s.time2 %>
+            <% else %>
+              <%= s.time1 %>            
+            <% end %>                   
+          </label>
+          <div class="modal_wrap">
+            <input id="trigger<%= s.id %>" type="checkbox">
+            <div class="modal_overlay">
+              <label for="trigger<%= s.id %>" class="modal_trigger"></label>
+              <div class="modal_content">
+                <label for="trigger<%= s.id %>" class="close_button">✖</label>
+                <%= s.player.name %>
+                <br>
+                <%= s.style.type %>
+                <%= s.phase %>
+                <br>
+                <div class = "content">          
+                  <a><span class = "reac_time">REAC</span>
+                  <%= s.reac_time %></a>
+                  <br>                                               
+                  <%= s.time1 %>
+                  <br>
+                  <%= s.time2 %>
+                  <br>
+                  <%= s.time3 %>
+                  <br>
+                  <%= s.time4 %>
+                  <br>                           
+                  <span class = "edit"><%= link_to "EDIT", edit_game_score_path(@game.id,s.id) %></span>
+                </div>
+                <br>
+              </div>
+            </div>
+          </div>                    
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class = "new_edit">
+    <%= link_to "記録入力", new_game_score_path(@game.id) %>
+  </div> 
+
+</div>
+
+
+
